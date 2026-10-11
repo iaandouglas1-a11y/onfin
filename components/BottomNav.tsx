@@ -28,7 +28,7 @@ function NavItem({ item, isActive }: { item: BottomNavItem; isActive: boolean })
     <Link href={item.href} className="w-[62px] shrink-0 flex flex-col items-center gap-1 active:opacity-70 transition-opacity">
       <span
         className={clsx(
-          "flex items-center justify-center w-[60px] h-[60px] rounded-[15px] transition-colors duration-200",
+          "flex items-center justify-center w-[60px] h-[50px] rounded-[15px] transition-colors duration-200",
           isActive ? "bg-[#5DA832] text-[#0A0A0A]" : "text-ink-secondary"
         )}
       >
