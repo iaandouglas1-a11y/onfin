@@ -19,7 +19,7 @@ type Item = {
   descricao: string;
   valor: number;
   dia_referencia: number;
-  categorias?: { nome: string } | null;
+  categorias?: { nome: string; icone?: string | null } | null;
 };
 
 type Parcela = {
@@ -30,7 +30,7 @@ type Parcela = {
   parcelas_total: number;
   data_primeira_parcela: string;
   dia_referencia: number;
-  categorias?: { nome: string } | null;
+  categorias?: { nome: string; icone?: string | null } | null;
   parcelaAtual: number;
   parcelasTotal: number;
 };
@@ -67,7 +67,7 @@ function LancamentoRow({
 }) {
   const isParcela = lancamento.kind === "parcela";
   const nomeCategoria = lancamento.categorias?.nome ?? "Sem categoria";
-  const Icon = getCategoryIcon(nomeCategoria);
+  const Icon = getCategoryIcon(nomeCategoria, lancamento.categorias?.icone);
   const valor = isParcela
     ? -Number(lancamento.valor_parcela)
     : lancamento.tipo === "receita" ? Number(lancamento.valor) : -Number(lancamento.valor);

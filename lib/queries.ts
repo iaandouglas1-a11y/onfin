@@ -31,7 +31,7 @@ export async function getContasWithMovs() {
 export async function getMovimentacoes(filters?: { inicio?: string; fim?: string; tipo?: "receita" | "despesa" | ""; categoriaId?: string }) { 
   noStore(); 
   const s = await createServerSupabaseClient(); 
-  let q = s.from("movimentacoes").select("*, categorias(nome), contas(nome), cartoes(nome), faturas(data_vencimento)").order("data", { ascending: false }); 
+  let q = s.from("movimentacoes").select("*, categorias(nome, icone), contas(nome), cartoes(nome), faturas(data_vencimento)").order("data", { ascending: false });
   if (filters?.inicio) q = q.gte("data", filters.inicio); 
   if (filters?.fim) q = q.lte("data", filters.fim); 
   if (filters?.tipo) q = q.eq("tipo", filters.tipo); 
@@ -48,8 +48,8 @@ export async function getDashboardData(filters?: { inicio?: string; fim?: string
   const start = filters?.inicio || b.start;
   const end = filters?.fim || b.end;
   const [allMovs, monthMovs] = await Promise.all([
-    s.from("movimentacoes").select("*, categorias(nome)"),
-    s.from("movimentacoes").select("*, categorias(nome)").gte("data", start).lte("data", end)
+    s.from("movimentacoes").select("*, categorias(nome, icone)"),
+    s.from("movimentacoes").select("*, categorias(nome, icone)").gte("data", start).lte("data", end)
   ]); 
   if (allMovs.error) throw allMovs.error; 
   if (monthMovs.error) throw monthMovs.error; 
@@ -69,7 +69,7 @@ export async function getCartoesEFaturas(filters?: { inicio?: string; fim?: stri
   const [cartoes, faturas, movs, itens] = await Promise.all([
     s.from("cartoes").select("*, contas(nome)").order("nome"), 
     faturasQuery, 
-    s.from("movimentacoes").select("*, categorias(nome)").order("data", { ascending: false }),
+    s.from("movimentacoes").select("*, categorias(nome, icone)").order("data", { ascending: false }),
     (s.from("financeiro_itens") as any).select("id, ativo")
   ]); 
   if (cartoes.error) throw cartoes.error; 
@@ -195,8 +195,8 @@ export async function getOrcamento(competencia: string) {
   const s = await createServerSupabaseClient();
   const inicio = `${competencia.slice(0, 7)}-01`;
   const [itensRes, parcelasRes] = await Promise.all([
-    s.from("orcamento_itens").select("*, categorias(nome)").eq("competencia", inicio),
-    s.from("orcamento_parcelas").select("*, categorias(nome)").order("data_primeira_parcela", { ascending: true }),
+    s.from("orcamento_itens").select("*, categorias(nome, icone)").eq("competencia", inicio),
+    s.from("orcamento_parcelas").select("*, categorias(nome, icone)").order("data_primeira_parcela", { ascending: true }),
   ]);
   if (itensRes.error) throw itensRes.error;
   if (parcelasRes.error) throw parcelasRes.error;

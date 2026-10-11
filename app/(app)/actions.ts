@@ -50,7 +50,8 @@ const categoriaSchema = z.object({
   nome: z.string().min(2, "Nome da categoria muito curto"),
   tipo: z.enum(["receita", "despesa"], {
     required_error: "Selecione o tipo da categoria"
-  })
+  }),
+  icone: z.string().min(1).max(60).optional().or(z.literal(""))
 });
 
 function entries(formData: FormData) {
@@ -209,6 +210,18 @@ export async function saveCategoria(formData: FormData) {
 
     redirect(`/categorias?error=${encodeURIComponent(e.message)}`);
   }
+}
+
+export async function editCategoria(formData: FormData) {
+  const id = String(formData.get("id") || "");
+  if (!id) throw new Error("Categoria inválida");
+  const parsed = categoriaSchema.pick({ nome: true, icone: true }).safeParse(entries(formData));
+  if (!parsed.success) throw new Error(parsed.error.errors[0].message);
+  const s = await createServerSupabaseClient();
+  const { error } = await (s.from("categorias") as any).update(parsed.data).eq("id", id);
+  if (error) throw new Error(`Erro no Banco de Dados: ${error.message}`);
+  revalidatePath("/categorias");
+  revalidatePath("/movimentacoes");
 }
 
 export async function deleteCategoria(formData: FormData) {

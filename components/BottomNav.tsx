@@ -25,16 +25,16 @@ const navItems: BottomNavItem[] = [
 function NavItem({ item, isActive }: { item: BottomNavItem; isActive: boolean }) {
   const Icon = item.icon;
   return (
-    <Link href={item.href} className="flex flex-col items-center flex-1 min-w-0 active:opacity-70 transition-opacity">
+    <Link href={item.href} className="w-[62px] shrink-0 flex flex-col items-center gap-[2px] active:opacity-70 transition-opacity">
       <span
         className={clsx(
-          "flex items-center justify-center w-12 h-8 rounded-xl mb-0.5 transition-colors duration-200",
-          isActive ? "bg-[#5DA832] text-[#0A0A0A]" : "text-ink-secondary"
+          "flex items-center justify-center w-12 h-8 rounded-[12px] transition-colors duration-200",
+          isActive ? "bg-[#5DA832] text-[#0A0A0A]" : "text-[#94A3B8]"
         )}
       >
-        <Icon className="w-6 h-6" strokeWidth={2.1} />
+        <Icon className="w-5 h-5" strokeWidth={2.1} />
       </span>
-      <span className={clsx("text-[10px] font-semibold leading-tight truncate", isActive ? "text-[#6fc23b]" : "text-ink-secondary")}>
+      <span className={clsx("text-[9.5px] font-semibold leading-none truncate max-w-[62px]", isActive ? "text-[#6fc23b]" : "text-[#94A3B8]")}>
         {item.label}
       </span>
     </Link>
@@ -46,8 +46,8 @@ export function BottomNav() {
   const isActive = (href: string) => pathname === href || pathname?.startsWith(`${href}/`);
 
   return (
-    <nav className="md:hidden fixed z-50 inset-x-0 bottom-0 bg-[#0F0F0F] border-t border-surface-border/60 pt-2 pb-[max(12px,env(safe-area-inset-bottom))]">
-      <div className="max-w-md mx-auto flex items-start justify-around px-1">
+    <nav className="md:hidden fixed z-50 inset-x-0 bottom-0 bg-[#0F0F0F] border-t-[0.5px] border-[#2E2E2E] pt-2 pb-[calc(12px+env(safe-area-inset-bottom,0px))] px-1">
+      <div className="w-full max-w-[310px] mx-auto flex items-start justify-center">
         {navItems.map((item) => (
           <NavItem key={item.href} item={item} isActive={isActive(item.href)} />
         ))}

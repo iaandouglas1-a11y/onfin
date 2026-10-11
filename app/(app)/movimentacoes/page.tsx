@@ -202,7 +202,7 @@ export default async function MovimentacoesPage({ searchParams }: { searchParams
               <Surface padded={false} className="divide-y divide-surface-border/50">
                 {grupos[data].map((m: any) => {
                   const transferencia = isTransferencia(m);
-                  const CatIcon = getCategoryIcon(m.categorias?.nome || "");
+                  const CatIcon = getCategoryIcon(m.categorias?.nome || "", m.categorias?.icone);
                   return (
                     <div key={m.id} className="list-row group">
                       <IconChip icon={CatIcon} tone={transferencia ? "gray" : m.tipo === "receita" ? "green" : "red"} />

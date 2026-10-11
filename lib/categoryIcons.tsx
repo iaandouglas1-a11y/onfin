@@ -11,7 +11,7 @@ import {
   Briefcase, Scissors, Users, HandCoins, HeartHandshake,
   Award, Shield, Milestone,
   Tag,
-  ArrowLeftRight, Plus, X,
+  ArrowLeftRight, Plus, X, Wallet,
   type LucideIcon,
 } from "lucide-react";
 
@@ -149,7 +149,14 @@ function normalize(str: string): string {
  * com base em correspondência de palavras-chave (com suporte a plural).
  * Cai para um ícone genérico (Tag) quando nenhuma regra corresponde.
  */
-export function getCategoryIcon(nome: string): LucideIcon {
+const customIcons: Record<string, LucideIcon> = {
+  Tag, ShoppingCart, Utensils, Home, Car, HeartPulse, Briefcase, Banknote,
+  CreditCard, Receipt, Gift, Plane, Dumbbell, Wallet, Smartphone, Film,
+  GraduationCap, PawPrint, PiggyBank, Landmark, Music,
+};
+
+export function getCategoryIcon(nome: string, icone?: string | null): LucideIcon {
+  if (icone && customIcons[icone]) return customIcons[icone];
   const n = normalize(nome || "");
   for (const rule of rules) {
     if (rule.keywords.some((k) => n.includes(normalize(k)))) {
