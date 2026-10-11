@@ -46,7 +46,7 @@ export function BottomNav() {
   const isActive = (href: string) => pathname === href || pathname?.startsWith(`${href}/`);
 
   return (
-    <nav className="md:hidden fixed z-50 inset-x-0 bottom-0 bg-[#0F0F0F] border-t border-surface-border/60 pt-[3px] pb-[max(12px,env(safe-area-inset-bottom))]">
+    <nav className="md:hidden fixed z-50 inset-x-0 bottom-0 bg-[#0F0F0F] border-t border-surface-border/60 pt-0 pb-[max(7px,env(safe-area-inset-bottom,0px))]">
       <div className="max-w-md mx-auto flex items-start justify-around px-1">
         {navItems.map((item) => (
           <NavItem key={item.href} item={item} isActive={isActive(item.href)} />
