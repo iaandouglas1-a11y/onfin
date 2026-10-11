@@ -5,7 +5,12 @@ import {
   Plus, X, ChevronDown, ChevronUp, Trash2, FolderOpen, Pencil, Check,
   Tag, ShoppingCart, Utensils, Home, Car, HeartPulse, Briefcase, Banknote,
   CreditCard, Receipt, Gift, Plane, Dumbbell, Wallet, Smartphone, Film,
-  GraduationCap, PawPrint, PiggyBank, Landmark, Music, LucideIcon,
+  GraduationCap, PawPrint, PiggyBank, Landmark, Music, Coffee, Beer, Wine,
+  Pizza, Fuel, Bus, Bike, ParkingCircle, Building2, Wrench, Lightbulb,
+  Droplet, Wifi, Tv, Laptop, Pill, Stethoscope, SprayCan, Syringe,
+  BookOpen, Gamepad2, Ticket, Dices, Shirt, ShoppingBag, Footprints, Gem,
+  Baby, Scissors, Users, HandCoins, HeartHandshake, Award, Shield, Milestone,
+  LucideIcon,
 } from "lucide-react";
 import { Card, FormGroup, Input, Select, IconChip, EmptyState } from "@/components/ui";
 import { saveCategoria, editCategoria, deleteCategoria } from "@/app/(app)/actions";
@@ -27,7 +32,24 @@ const ICON_OPTIONS: IconOption[] = [
   { name: "Smartphone", icon: Smartphone }, { name: "Film", icon: Film },
   { name: "GraduationCap", icon: GraduationCap }, { name: "PawPrint", icon: PawPrint },
   { name: "PiggyBank", icon: PiggyBank }, { name: "Landmark", icon: Landmark },
-  { name: "Music", icon: Music },
+  { name: "Music", icon: Music }, { name: "Coffee", icon: Coffee },
+  { name: "Beer", icon: Beer }, { name: "Wine", icon: Wine },
+  { name: "Pizza", icon: Pizza }, { name: "Fuel", icon: Fuel },
+  { name: "Bus", icon: Bus }, { name: "Bike", icon: Bike },
+  { name: "ParkingCircle", icon: ParkingCircle }, { name: "Building2", icon: Building2 },
+  { name: "Wrench", icon: Wrench }, { name: "Lightbulb", icon: Lightbulb },
+  { name: "Droplet", icon: Droplet }, { name: "Wifi", icon: Wifi },
+  { name: "Tv", icon: Tv }, { name: "Laptop", icon: Laptop },
+  { name: "Pill", icon: Pill }, { name: "Stethoscope", icon: Stethoscope },
+  { name: "SprayCan", icon: SprayCan }, { name: "Syringe", icon: Syringe },
+  { name: "BookOpen", icon: BookOpen }, { name: "Gamepad2", icon: Gamepad2 },
+  { name: "Ticket", icon: Ticket }, { name: "Dices", icon: Dices },
+  { name: "Shirt", icon: Shirt }, { name: "ShoppingBag", icon: ShoppingBag },
+  { name: "Footprints", icon: Footprints }, { name: "Gem", icon: Gem },
+  { name: "Baby", icon: Baby }, { name: "Scissors", icon: Scissors },
+  { name: "Users", icon: Users }, { name: "HandCoins", icon: HandCoins },
+  { name: "HeartHandshake", icon: HeartHandshake }, { name: "Award", icon: Award },
+  { name: "Shield", icon: Shield }, { name: "Milestone", icon: Milestone },
 ];
 const ICON_BY_NAME = Object.fromEntries(ICON_OPTIONS.map((option) => [option.name, option.icon])) as Record<string, LucideIcon>;
 

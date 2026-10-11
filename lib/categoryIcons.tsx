@@ -152,7 +152,11 @@ function normalize(str: string): string {
 const customIcons: Record<string, LucideIcon> = {
   Tag, ShoppingCart, Utensils, Home, Car, HeartPulse, Briefcase, Banknote,
   CreditCard, Receipt, Gift, Plane, Dumbbell, Wallet, Smartphone, Film,
-  GraduationCap, PawPrint, PiggyBank, Landmark, Music,
+  GraduationCap, PawPrint, PiggyBank, Landmark, Music, Coffee, Beer, Wine,
+  Pizza, Fuel, Bus, Bike, ParkingCircle, Building2, Wrench, Lightbulb,
+  Droplet, Wifi, Tv, Laptop, Pill, Stethoscope, SprayCan, Syringe,
+  BookOpen, Gamepad2, Ticket, Dices, Shirt, ShoppingBag, Footprints, Gem,
+  Baby, Scissors, Users, HandCoins, HeartHandshake, Award, Shield, Milestone,
 };
 
 export function getCategoryIcon(nome: string, icone?: string | null): LucideIcon {
