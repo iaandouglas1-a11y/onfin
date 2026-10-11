@@ -28,11 +28,11 @@ function NavItem({ item, isActive }: { item: BottomNavItem; isActive: boolean })
     <Link href={item.href} className="w-[62px] shrink-0 flex flex-col items-center gap-[2px] active:opacity-70 transition-opacity">
       <span
         className={clsx(
-          "flex items-center justify-center w-12 h-8 rounded-[12px] transition-colors duration-200",
+          "flex items-center justify-center w-12 h-[34px] rounded-[12px] transition-colors duration-200",
           isActive ? "bg-[#5DA832] text-[#0A0A0A]" : "text-[#94A3B8]"
         )}
       >
-        <Icon className="w-5 h-5" strokeWidth={2.1} />
+        <Icon className="w-[21px] h-[21px]" strokeWidth={2.1} />
       </span>
       <span className={clsx("text-[9.5px] font-semibold leading-none truncate max-w-[62px]", isActive ? "text-[#6fc23b]" : "text-[#94A3B8]")}>
         {item.label}
