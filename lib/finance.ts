@@ -8,7 +8,7 @@ export function isTransferencia(mov: { categorias?: { nome?: string | null } | n
 
   // Aceita tanto registros novos quanto transferências antigas salvas sem
   // acento ou com pequenas variações na descrição.
-  return categoria.startsWith("transferencia")
+  return categoria.includes("transferencia")
     || descricao.includes("transferencia entre contas")
     || /transferencia.*\((saida|entrada)\)$/.test(descricao);
 }
