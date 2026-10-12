@@ -35,9 +35,16 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
   const movimentacoesOperacionais = monthMovs.filter((m) => !isTransferencia(m));
   const receitas = movimentacoesOperacionais.filter((m) => m.tipo === "receita").reduce((s, m) => s + Number(m.valor), 0);
-  const { end: fimMesAtual } = monthBounds();
+  const { start: inicioMesAtual, end: fimMesAtual } = monthBounds();
   const totalFaturasAberto = (faturas as any[])
-    .filter(f => !f.pago && String(f.data_vencimento ?? "") <= fimMesAtual)
+    .filter(f => {
+      if (f.pago) return false;
+      const vencimento = String(f.data_vencimento ?? "");
+      const fechamento = String(f.data_fechamento ?? "");
+      const vencidaOuAtual = vencimento <= fimMesAtual;
+      const fechadaNoMesAtual = fechamento >= inicioMesAtual && fechamento <= fimMesAtual;
+      return vencidaOuAtual || fechadaNoMesAtual;
+    })
     .reduce((sum, f) => sum + invoiceRemaining(f.id, faturaMovs), 0);
   const despesas = movimentacoesOperacionais.filter((m) => m.tipo === "despesa").reduce((s, m) => s + Number(m.valor), 0);
   const saldo    = totalBalance(allMovs);
