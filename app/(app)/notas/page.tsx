@@ -6,7 +6,7 @@ export default async function NotasPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-[22px] font-semibold text-ink-primary tracking-tight px-1">Notas</h1>
+      <h1 className="hidden md:block text-[22px] font-semibold text-ink-primary tracking-tight px-1">Notas</h1>
       <NotasBody notas={notas} />
     </div>
   );

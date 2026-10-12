@@ -110,7 +110,7 @@ export default async function OrcamentoPage({ searchParams }: { searchParams: Pr
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between px-1">
-        <h1 className="text-[22px] font-semibold text-ink-primary tracking-tight">Orçamento</h1>
+        <h1 className="hidden md:block text-[22px] font-semibold text-ink-primary tracking-tight">Orçamento</h1>
 
         <details className="relative shrink-0">
           <summary className="list-none cursor-pointer w-8 h-8 rounded-full bg-surface border border-surface-border/50 flex items-center justify-center text-ink-tertiary hover:text-ink-primary transition-colors">

@@ -8,7 +8,7 @@ export default async function GestaoPJPage({ searchParams }: { searchParams: Pro
 
   return (
     <div className="space-y-6">
-      <h1 className="text-[22px] font-semibold text-ink-primary tracking-tight px-1">Gestão PJ</h1>
+      <h1 className="hidden md:block text-[22px] font-semibold text-ink-primary tracking-tight px-1">Gestão PJ</h1>
       <GestaoPJBody
         abaInicial={abaInicial}
         honorarios={<HonorariosSection />}
