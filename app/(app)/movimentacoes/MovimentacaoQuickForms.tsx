@@ -32,7 +32,13 @@ export default function MovimentacaoQuickForms({ categorias, contas, cartoes, fa
     limite.setMonth(limite.getMonth() + 2);
     return new Date(`${f.data_vencimento}T12:00:00`) <= limite;
   });
-  const categoriasVisiveis = categorias.filter((c) => !c.tipo || c.tipo === tipo);
+  const normalizarTipo = (valor?: string) => String(valor ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase()
+    .replace(/s$/, "");
+  const categoriasVisiveis = categorias.filter((c) => !c.tipo || normalizarTipo(c.tipo) === tipo);
   return (
     <div className="space-y-2.5">
       <div className="grid grid-cols-2 gap-2">
