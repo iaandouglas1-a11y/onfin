@@ -1,9 +1,16 @@
 import type { Movimentacao } from "@/types/database";
 export function signedValue(mov: Pick<Movimentacao, "tipo" | "valor">) { return mov.tipo === "receita" ? Number(mov.valor) : -Number(mov.valor); }
 export function isTransferencia(mov: { categorias?: { nome?: string | null } | null; descricao?: string | null }) {
-  const categoria = mov.categorias?.nome?.trim().toLocaleLowerCase("pt-BR");
-  const descricao = mov.descricao?.trim() ?? "";
-  return categoria === "transferência" || /transferência entre contas.*\((saída|entrada)\)$/i.test(descricao);
+  const normalizar = (valor: string | null | undefined) =>
+    String(valor ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLocaleLowerCase("pt-BR");
+  const categoria = normalizar(mov.categorias?.nome);
+  const descricao = normalizar(mov.descricao);
+
+  // Aceita tanto registros novos quanto transferências antigas salvas sem
+  // acento ou com pequenas variações na descrição.
+  return categoria.startsWith("transferencia")
+    || descricao.includes("transferencia entre contas")
+    || /transferencia.*\((saida|entrada)\)$/.test(descricao);
 }
 export function accountBalance(contaId: string, movs: Movimentacao[]) { return movs.filter((m) => m.conta_id === contaId && m.status === "realizado").reduce((sum, m) => sum + signedValue(m), 0); }
 export function totalBalance(movs: Movimentacao[]) { return movs.filter((m) => m.conta_id && m.status === "realizado").reduce((sum, m) => sum + signedValue(m), 0); }
