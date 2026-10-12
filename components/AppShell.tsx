@@ -160,7 +160,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <PageHeaderIcon className="h-5 w-5 shrink-0 text-ink-primary" />
         </div>
         <div className="relative -mt-4 md:mt-0 flex-1 rounded-t-[22px] md:rounded-none bg-bg p-4 md:p-8 md:pt-8 pt-5 pb-[calc(6rem+env(safe-area-inset-bottom))] md:pb-8">
-          <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="max-w-7xl mx-auto pt-4 md:pt-0 animate-in fade-in slide-in-from-bottom-4 duration-700">
             {children}
           </div>
         </div>
