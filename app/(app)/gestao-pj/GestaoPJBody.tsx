@@ -19,7 +19,7 @@ export default function GestaoPJBody({
   const [aba, setAba] = useState<Aba>(abaInicial);
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <SegmentedControl<Aba>
         options={[
           { label: "Honorários", value: "honorarios" },

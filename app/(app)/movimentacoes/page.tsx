@@ -78,7 +78,7 @@ export default async function MovimentacoesPage({ searchParams }: { searchParams
   });
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <FiltroDataPersist pagina="movimentacoes" basePath="/movimentacoes" inicio={sp.inicio} fim={sp.fim} />
 
       <div className="flex items-center justify-between px-1">

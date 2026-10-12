@@ -59,7 +59,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     .slice(0, 5);
 
   return (
-    <div className="space-y-4 md:space-y-6">
+    <div className="space-y-6">
       <FiltroDataPersist pagina="dashboard" basePath="/dashboard" inicio={sp.inicio} fim={sp.fim} />
 
       <div className="hidden md:flex items-center justify-between px-1">
