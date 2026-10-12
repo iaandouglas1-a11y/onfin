@@ -1,7 +1,7 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
-import { LayoutDashboard, ArrowUpRight, Wallet, TrendingUp, Tags } from "lucide-react";
+import { House, List, Wallet, TrendingUp, Tags } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { clsx } from "clsx";
 import Link from "next/link";
@@ -15,8 +15,8 @@ export interface BottomNavItem {
 // Barra inferior fixa (mobile). Os demais módulos (Dívidas, Faturas, Notas e
 // Gestão PJ) são abertos por atalhos no Dashboard.
 const navItems: BottomNavItem[] = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/movimentacoes", label: "Extrato", icon: ArrowUpRight },
+  { href: "/dashboard", label: "Dashboard", icon: House },
+  { href: "/movimentacoes", label: "Extrato", icon: List },
   { href: "/contas", label: "Bancos", icon: Wallet },
   { href: "/investimentos", label: "Investim.", icon: TrendingUp },
   { href: "/categorias", label: "Categorias", icon: Tags },

@@ -3,7 +3,7 @@ import { Card, Input, Button, AmountText, StatPill, Surface } from "@/components
 import { currency } from "@/lib/format";
 import { isTransferencia, totalBalance, invoiceRemaining } from "@/lib/finance";
 import { getDashboardData, monthlyDre, getCartoesEFaturas } from "@/lib/queries";
-import { TrendingUp, Filter, ArrowUpRight, ArrowDownLeft, ArrowLeftRight, TrendingDown, Receipt, StickyNote, Briefcase, Wallet, PiggyBank, ChevronRight } from "lucide-react";
+import { TrendingUp, Filter, ArrowUpRight, ArrowDownLeft, ArrowLeftRight, TrendingDown, Receipt, StickyNote, Wallet, ChevronRight, House, List, CreditCard, ChartPie, BriefcaseBusiness } from "lucide-react";
 import Link from "next/link";
 import { IconChip } from "@/components/ui";
 import FiltroDataPersist from "@/components/FiltroDataPersist";
@@ -82,11 +82,11 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       {/* ── Acesso rápido aos módulos ───────────────────────────────── */}
       <div className="grid grid-cols-5 gap-0.5">
         {([
-          { href: "/orcamento", label: "Orçamento", icon: PiggyBank },
+          { href: "/orcamento", label: "Orçamento", icon: ChartPie },
           { href: "/dividas", label: "Dívidas", icon: TrendingDown },
-          { href: "/faturas", label: "Faturas", icon: Receipt },
+          { href: "/faturas", label: "Faturas", icon: CreditCard },
           { href: "/notas", label: "Notas", icon: StickyNote },
-          { href: "/gestao-pj", label: "Gestão PJ", icon: Briefcase },
+          { href: "/gestao-pj", label: "Gestão PJ", icon: BriefcaseBusiness },
         ] as { href: string; label: string; icon: any }[]).map((a) => (
           <Link key={a.href} href={a.href} className="flex flex-col items-center gap-1 active:scale-95 transition-transform">
             <IconChip icon={a.icon} tone="brand" size={60} iconSize={28} rounded="rounded-[15px]" />

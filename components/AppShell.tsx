@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import {
-  LayoutDashboard, ArrowUpRight,
+  House, List, CreditCard, ChartPie, BriefcaseBusiness,
   Receipt, Wallet, Tags, ChevronRight, ChevronLeft, TrendingDown, TrendingUp, StickyNote, PiggyBank, Briefcase,
   Search, Filter, Pencil, type LucideIcon
 } from "lucide-react";
@@ -17,15 +17,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const pageHeader = [
     { href: "/dashboard", title: "Meu Onfin", icon: Search },
-    { href: "/movimentacoes", title: "Extrato", icon: Filter },
+    { href: "/movimentacoes", title: "Extrato", icon: List },
     { href: "/contas", title: "Bancos e cartões", icon: Pencil },
     { href: "/investimentos", title: "Investimentos", icon: TrendingUp },
     { href: "/categorias", title: "Categorias", icon: Tags },
-    { href: "/faturas", title: "Faturas", icon: Receipt },
+    { href: "/faturas", title: "Faturas", icon: CreditCard },
     { href: "/dividas", title: "Dívidas", icon: TrendingDown },
     { href: "/notas", title: "Notas", icon: StickyNote },
-    { href: "/orcamento", title: "Orçamento", icon: PiggyBank },
-    { href: "/gestao-pj", title: "Gestão PJ", icon: Briefcase },
+    { href: "/orcamento", title: "Orçamento", icon: ChartPie },
+    { href: "/gestao-pj", title: "Gestão PJ", icon: BriefcaseBusiness },
   ].find(({ href }) => pathname === href || pathname?.startsWith(`${href}/`)) ?? {
     href: "/dashboard", title: "Meu Onfin", icon: Search,
   };
@@ -39,8 +39,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     {
       group: "Principal",
       items: [
-        { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-        { href: "/movimentacoes", label: "Extrato", icon: ArrowUpRight },
+        { href: "/dashboard", label: "Dashboard", icon: House },
+        { href: "/movimentacoes", label: "Extrato", icon: List },
         { href: "/contas", label: "Bancos e Contas", icon: Wallet },
         { href: "/investimentos", label: "Investimentos", icon: TrendingUp },
         { href: "/categorias", label: "Categorias", icon: Tags },
@@ -50,10 +50,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       group: "Gestão",
       items: [
         { href: "/dividas", label: "Dívidas", icon: TrendingDown },
-        { href: "/faturas", label: "Faturas", icon: Receipt },
+        { href: "/faturas", label: "Faturas", icon: CreditCard },
         { href: "/notas", label: "Notas", icon: StickyNote },
-        { href: "/gestao-pj", label: "Gestão PJ", icon: Briefcase },
-        { href: "/orcamento", label: "Orçamento", icon: PiggyBank },
+        { href: "/gestao-pj", label: "Gestão PJ", icon: BriefcaseBusiness },
+        { href: "/orcamento", label: "Orçamento", icon: ChartPie },
       ]
     },
   ];
