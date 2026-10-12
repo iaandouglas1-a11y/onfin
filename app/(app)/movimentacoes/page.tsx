@@ -216,27 +216,29 @@ export default async function MovimentacoesPage({ searchParams }: { searchParams
                             : (m.descricao || m.contas?.nome || m.cartoes?.nome || "—")}
                         </div>
                       </div>
-                      {transferencia ? <span className="num shrink-0 text-[14px] font-semibold text-ink-secondary">↔ {currency(Number(m.valor))}</span> : <AmountText value={m.tipo === "receita" ? Number(m.valor) : -Number(m.valor)} signed tone={m.tipo === "receita" ? "green" : "red"} />}
-                      <div className="action-col opacity-80 group-hover:opacity-100 transition-opacity">
-                        <EditarMovimentacaoBtn
-                          mov={m}
-                          categorias={categorias}
-                          contas={contasAtivas}
-                          cartoes={cartoesAtivos}
-                          faturas={
-                            // Faturas em aberto + a fatura atual do lançamento (mesmo que já paga),
-                            // pra não perder a referência ao editar um lançamento antigo.
-                            faturasEmAberto.some((f) => f.id === m.fatura_id)
-                              ? faturasEmAberto
-                              : [...faturasEmAberto, ...cardsData.faturas.filter((f: any) => f.id === m.fatura_id)]
-                          }
-                        />
-                        <form action={deleteMovimentacao}>
-                          <input type="hidden" name="id" value={m.id} />
-                          <button className="p-1.5 text-slate-600 hover:text-[#f87171] rounded-xl transition-colors">
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </button>
-                        </form>
+                      <div className="ml-auto shrink-0 flex flex-col items-end gap-0.5 opacity-80 group-hover:opacity-100 transition-opacity">
+                        {transferencia ? <span className="num text-[14px] font-semibold text-ink-secondary">↔ {currency(Number(m.valor))}</span> : <AmountText value={m.tipo === "receita" ? Number(m.valor) : -Number(m.valor)} signed tone={m.tipo === "receita" ? "green" : "red"} />}
+                        <div className="flex items-center gap-1">
+                          <EditarMovimentacaoBtn
+                            mov={m}
+                            categorias={categorias}
+                            contas={contasAtivas}
+                            cartoes={cartoesAtivos}
+                            faturas={
+                              // Faturas em aberto + a fatura atual do lançamento (mesmo que já paga),
+                              // pra não perder a referência ao editar um lançamento antigo.
+                              faturasEmAberto.some((f) => f.id === m.fatura_id)
+                                ? faturasEmAberto
+                                : [...faturasEmAberto, ...cardsData.faturas.filter((f: any) => f.id === m.fatura_id)]
+                            }
+                          />
+                          <form action={deleteMovimentacao}>
+                            <input type="hidden" name="id" value={m.id} />
+                            <button className="p-1.5 text-slate-600 hover:text-[#f87171] rounded-xl transition-colors" title="Excluir">
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   );
