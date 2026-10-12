@@ -158,14 +158,24 @@ export default function NotaEditorBody({ nota }: { nota: Nota }) {
     <div className="space-y-4 max-w-2xl">
       {/* Header — mesmo padrão das demais páginas (título 22px em negrito,
           alinhado com px-1), com voltar à esquerda e ações à direita */}
-      <div className="flex items-center justify-between px-1">
-        <Link
-          href="/notas"
-          className="flex items-center gap-1 text-[22px] font-semibold text-ink-primary tracking-tight"
-        >
-          <ChevronLeft className="h-5 w-5 text-ink-secondary" />
-          Notas
-        </Link>
+      <div className="flex items-center justify-between gap-3 px-1">
+        <div className="flex items-center gap-1 min-w-0 flex-1">
+          <Link
+            href="/notas"
+            aria-label="Voltar para notas"
+            className="shrink-0 flex items-center justify-center text-ink-secondary"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </Link>
+          <input
+            value={titulo}
+            onChange={(e) => { setTitulo(e.target.value); setSujo(true); }}
+            onBlur={() => sujo && salvar()}
+            placeholder="Nova nota"
+            aria-label="Nome da lista"
+            className="min-w-0 flex-1 bg-transparent text-[22px] font-semibold text-ink-primary tracking-tight placeholder:text-slate-600 outline-none border-none"
+          />
+        </div>
 
         <div className="flex items-center gap-1.5">
           <form action={togglePinNota}>
@@ -213,15 +223,6 @@ export default function NotaEditorBody({ nota }: { nota: Nota }) {
         {dateBR((nota.updated_at || nota.created_at)?.slice(0, 10))}
         {salvando && " · salvando..."}
       </p>
-
-      {/* Título */}
-      <input
-        value={titulo}
-        onChange={(e) => { setTitulo(e.target.value); setSujo(true); }}
-        onBlur={() => sujo && salvar()}
-        placeholder="Título"
-        className="w-full bg-transparent text-[19px] font-semibold text-white placeholder:text-slate-600 outline-none border-none"
-      />
 
       {/* Corpo único — texto livre e checklist na mesma sequência, sem
           separação entre "conteúdo" e "itens" */}
