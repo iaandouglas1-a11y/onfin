@@ -1,5 +1,6 @@
 "use client";
 
+import { SplitLayout } from "@/components/SplitLayout";
 import { useState } from "react";
 import { Trash2, Copy, PiggyBank, Receipt } from "lucide-react";
 import { Card, StatPill, AmountText, EmptyState, ProgressBar, Badge, IconChip } from "@/components/ui";
@@ -174,7 +175,7 @@ export default function OrcamentoBody({
   const acimaDoOrcado = comparativo.filter((c) => c.pct > 100);
 
   return (
-    <>
+<SplitLayout top={<>
       {/* Hero: saldo projetado do orçamento — mês inteiro */}
       <div className="glass-card p-6">
         <div className="text-[11px] font-semibold text-ink-secondary">Saldo do orçamento</div>
@@ -186,8 +187,10 @@ export default function OrcamentoBody({
         <StatPill label="Custos estimados" value={currency(totalCustos)} tone="red" />
       </div>
 
+</>} aside={<>
       <OrcamentoQuickForms competencia={competencia} categorias={categorias} />
 
+</>}>
       {/* Quinzena 1 e 2 — receitas, despesas e parcelas ativas misturadas,
           agrupadas por dia_referencia (corte fixo: 1-14 / 15-31) */}
       <QuinzenaCard
@@ -329,6 +332,6 @@ export default function OrcamentoBody({
           </button>
         </div>
       )}
-    </>
+    </SplitLayout>
   );
 }

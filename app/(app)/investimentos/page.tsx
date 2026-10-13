@@ -1,4 +1,5 @@
 import { getInvestimentos, getContasWithMovs, getInvestimentoSaldos } from "@/lib/queries";
+import { SplitLayout } from "@/components/SplitLayout";
 import { Card, StatPill, Input, Button } from "@/components/ui";
 import { currency, dateBR } from "@/lib/format";
 import { TrendingUp, Filter } from "lucide-react";
@@ -141,7 +142,7 @@ export default async function InvestimentosPage({ searchParams }: { searchParams
   ].filter(d => d.value > 0);
 
   return (
-    <div className="space-y-6">
+<SplitLayout top={<>
       {/* Hero: patrimônio + rentabilidade — reflete o período filtrado quando houver */}
       <div className="glass-card p-6 flex items-end justify-between gap-4">
         <div>
@@ -215,9 +216,11 @@ export default async function InvestimentosPage({ searchParams }: { searchParams
         </details>
       </div>
 
+</>} aside={<>
       {/* Investimento / Aporte-Resgate / Saldo mensal — botões lado a lado */}
       <InvestimentoQuickForms contas={contasList} investimentos={investimentosList} mesAtual={mesAtual} />
 
+</>}>
       {/* Distribuição da carteira — Renda Fixa x Renda Variável */}
       {distribuicao.length > 0 && (
         <Card className="border-surface-border/60 p-4">
@@ -282,6 +285,6 @@ export default async function InvestimentosPage({ searchParams }: { searchParams
           )}
         </div>
       </Card>
-    </div>
+    </SplitLayout>
   );
 }

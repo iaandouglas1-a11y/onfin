@@ -355,6 +355,7 @@ export function ListRow({
   onClick,
   right,
   chevron = false,
+  active = false,
 }: {
   icon: LucideIcon;
   tone?: IconTone;
@@ -366,6 +367,7 @@ export function ListRow({
   onClick?: () => void;
   right?: React.ReactNode;
   chevron?: boolean;
+  active?: boolean;
 }) {
   const content = (
     <div className="list-row">
@@ -388,7 +390,7 @@ export function ListRow({
   );
 
   if (href) {
-    return <Link href={href} className="block hover:bg-surface-2/40 transition-colors">{content}</Link>;
+    return <Link href={href} className={clsx("block hover:bg-surface-2/40 transition-colors", active && "md:bg-[#5DA832]/10")}>{content}</Link>;
   }
   if (onClick) {
     return <button onClick={onClick} className="block w-full text-left hover:bg-surface-2/40 transition-colors">{content}</button>;

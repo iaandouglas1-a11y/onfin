@@ -1,4 +1,5 @@
 import { deleteMovimentacao } from "@/app/(app)/actions";
+import { SplitLayout } from "@/components/SplitLayout";
 import { Card, Input, Select, Button, EmptyState, IconChip, AmountText, Surface } from "@/components/ui";
 import { currency, dateBR } from "@/lib/format";
 import { ANTECIPACAO_FATURA_PREFIX, isAntecipacaoFatura, isTransferencia } from "@/lib/finance";
@@ -78,7 +79,7 @@ export default async function MovimentacoesPage({ searchParams }: { searchParams
   });
 
   return (
-    <div className="space-y-6">
+<SplitLayout top={<>
       <FiltroDataPersist pagina="movimentacoes" basePath="/movimentacoes" inicio={sp.inicio} fim={sp.fim} />
 
       <div className="flex items-center justify-between px-1">
@@ -116,6 +117,7 @@ export default async function MovimentacoesPage({ searchParams }: { searchParams
         </div>
       </div>
 
+</>} aside={<>
       {/* Nova transação / Transferência — botões lado a lado, formulário só aparece ao clicar */}
       <div id="lancamento" className="scroll-mt-6">
         <MovimentacaoQuickForms
@@ -127,6 +129,7 @@ export default async function MovimentacoesPage({ searchParams }: { searchParams
         />
       </div>
 
+</>}>
       {/* Filtros */}
       {/* Filtros — discreto: chips + ícone p/ período customizado e categoria ── */}
       <div id="filtros" className="flex items-center gap-2 scroll-mt-6">
@@ -248,6 +251,6 @@ export default async function MovimentacoesPage({ searchParams }: { searchParams
           ))}
         </div>
       )}
-    </div>
+    </SplitLayout>
   );
 }

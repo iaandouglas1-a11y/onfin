@@ -1,5 +1,6 @@
 "use client";
 
+import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
 import { saveOrcamentoItem, saveOrcamentoParcela, sugerirValorCategoria } from "@/app/(app)/actions_orcamento";
@@ -68,6 +69,8 @@ function DiaReferenciaField({ value, onChange }: { value: string; onChange: (v: 
  * oferecemos como sugestão de valor. */
 export default function OrcamentoQuickForms({ competencia, categorias }: Props) {
   const [aberto, setAberto] = useState<null | "receita" | "gasto">(null);
+  const isDesktop = useIsDesktop();
+  const painel = aberto ?? (isDesktop ? "gasto" : null);
   const [subtipoGasto, setSubtipoGasto] = useState<SubtipoGasto>("fixo");
   const [valorGasto, setValorGasto] = useState("");
   const [diaGasto, setDiaGasto] = useState("1");
@@ -109,7 +112,7 @@ export default function OrcamentoQuickForms({ competencia, categorias }: Props) 
           type="button"
           onClick={() => setAberto((v) => (v === "receita" ? null : "receita"))}
           className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
-            aberto === "receita"
+            painel === "receita"
               ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]"
               : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
           }`}
@@ -121,7 +124,7 @@ export default function OrcamentoQuickForms({ competencia, categorias }: Props) 
           type="button"
           onClick={() => setAberto((v) => (v === "gasto" ? null : "gasto"))}
           className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
-            aberto === "gasto"
+            painel === "gasto"
               ? "bg-info/15 border-info/40 text-[#CBD5E1]"
               : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
           }`}
@@ -132,7 +135,7 @@ export default function OrcamentoQuickForms({ competencia, categorias }: Props) 
       </div>
 
       {/* Painel: Nova receita */}
-      {aberto === "receita" && (
+      {painel === "receita" && (
         <div className="border border-[#5DA832]/30 rounded-xl p-4 bg-[#5DA832]/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#5DA832] font-semibold text-xs">
@@ -192,7 +195,7 @@ export default function OrcamentoQuickForms({ competencia, categorias }: Props) 
       )}
 
       {/* Painel: Novo gasto */}
-      {aberto === "gasto" && (
+      {painel === "gasto" && (
         <div className="border border-info/30 rounded-xl p-4 bg-info/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#CBD5E1] font-semibold text-xs">

@@ -1,5 +1,7 @@
 "use client";
 
+import { SplitLayout } from "@/components/SplitLayout";
+import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import { Plus, X, Users } from "lucide-react";
 import { Card, FormGroup, Input, EmptyState } from "@/components/ui";
@@ -14,6 +16,7 @@ interface Props {
 
 export default function ClientesBody({ ativos, inativos }: Props) {
   const [painelAberto, setPainelAberto] = useState(false);
+  const isDesktop = useIsDesktop();
   const [aba, setAba] = useState<"ativos" | "inativos">("ativos");
 
   const lista = aba === "ativos" ? ativos : inativos;
@@ -21,12 +24,12 @@ export default function ClientesBody({ ativos, inativos }: Props) {
   const count = lista.length;
 
   return (
-    <div className="space-y-4">
+<SplitLayout aside={<>
       {/* Botão — Novo cliente (mesmo mecanismo de toggle de Categorias/Honorários) */}
       <button
         type="button"
         onClick={() => setPainelAberto((v) => !v)}
-        className={`w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
+        className={`md:hidden w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
           painelAberto
             ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]"
             : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
@@ -36,7 +39,7 @@ export default function ClientesBody({ ativos, inativos }: Props) {
         Novo cliente
       </button>
 
-      {painelAberto && (
+      {(isDesktop || painelAberto) && (
         <div className="border border-[#5DA832]/30 rounded-xl p-4 bg-[#5DA832]/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#5DA832] font-semibold text-xs">
@@ -46,7 +49,7 @@ export default function ClientesBody({ ativos, inativos }: Props) {
             <button
               type="button"
               onClick={() => setPainelAberto(false)}
-              className="p-1 text-slate-500 hover:text-slate-300 rounded transition-colors"
+              className="md:hidden p-1 text-slate-500 hover:text-slate-300 rounded transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
@@ -85,6 +88,7 @@ export default function ClientesBody({ ativos, inativos }: Props) {
         </div>
       )}
 
+</>}>
       {/* Toggle — Ativos / Inativos (mesmo mecanismo de Em aberto/Liquidadas em Dívidas) */}
       <div className="flex bg-surface rounded-xl p-1">
         <button
@@ -140,6 +144,6 @@ export default function ClientesBody({ ativos, inativos }: Props) {
           </div>
         )}
       </Card>
-    </div>
+    </SplitLayout>
   );
 }

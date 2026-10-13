@@ -1,5 +1,7 @@
 "use client";
 
+import { SplitLayout } from "@/components/SplitLayout";
+import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Pencil, X, Wallet, CreditCard, Archive, ArchiveRestore } from "lucide-react";
@@ -42,6 +44,8 @@ function cartaoTone(usado: number, limite: number): { icon: IconTone; text: Tone
 export default function ContasCartoesBody({ contas, cartoes }: { contas: Item[]; cartoes: Item[] }) {
   const router = useRouter();
   const [painelAberto, setPainelAberto] = useState<null | "editar" | "adicionar">(null);
+  const isDesktop = useIsDesktop();
+  const painel = painelAberto ?? (isDesktop ? "adicionar" : null);
   const [aba, setAba] = useState<"ativos" | "arquivados">("ativos");
 
   const todosItens = [...contas, ...cartoes];
@@ -53,18 +57,19 @@ export default function ContasCartoesBody({ contas, cartoes }: { contas: Item[];
   }
 
   return (
-    <>
+<SplitLayout top={<>
       <div className="flex gap-1.5 bg-surface-2/60 rounded-xl p-1">
         <button type="button" onClick={() => setAba("ativos")} className={`flex-1 py-2 rounded-xl text-[12.5px] font-semibold ${aba === "ativos" ? "bg-[#5DA832]/20 text-[#8FCB5E]" : "text-ink-tertiary"}`}>Ativos</button>
         <button type="button" onClick={() => setAba("arquivados")} className={`flex-1 py-2 rounded-xl text-[12.5px] font-semibold ${aba === "arquivados" ? "bg-[#5DA832]/20 text-[#8FCB5E]" : "text-ink-tertiary"}`}>Arquivados</button>
       </div>
+</>} aside={<>
       {/* Ações do topo — mesmo padrão visual de "Nova transação" / "Transferência" */}
       <div className="grid grid-cols-2 gap-2">
         <button
           type="button"
           onClick={() => setPainelAberto((v) => (v === "editar" ? null : "editar"))}
           className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
-            painelAberto === "editar"
+            painel === "editar"
               ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]"
               : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
           }`}
@@ -76,7 +81,7 @@ export default function ContasCartoesBody({ contas, cartoes }: { contas: Item[];
           type="button"
           onClick={() => setPainelAberto((v) => (v === "adicionar" ? null : "adicionar"))}
           className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
-            painelAberto === "adicionar"
+            painel === "adicionar"
               ? "bg-info/15 border-info/40 text-[#CBD5E1]"
               : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
           }`}
@@ -87,7 +92,7 @@ export default function ContasCartoesBody({ contas, cartoes }: { contas: Item[];
       </div>
 
       {/* Painel: Editar conta ou cartão */}
-      {painelAberto === "editar" && (
+      {painel === "editar" && (
         <EditarFinancialForm
           items={todosItens}
           onClose={() => setPainelAberto(null)}
@@ -99,7 +104,7 @@ export default function ContasCartoesBody({ contas, cartoes }: { contas: Item[];
       )}
 
       {/* Painel: Adicionar conta */}
-      {painelAberto === "adicionar" && (
+      {painel === "adicionar" && (
         <div className="border border-[#5DA832]/30 rounded-xl p-4 bg-[#5DA832]/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#5DA832] font-semibold text-xs">
@@ -109,7 +114,7 @@ export default function ContasCartoesBody({ contas, cartoes }: { contas: Item[];
             <button
               type="button"
               onClick={() => setPainelAberto(null)}
-              className="p-1 text-slate-500 hover:text-slate-300 rounded transition-colors"
+              className="md:hidden p-1 text-slate-500 hover:text-slate-300 rounded transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
@@ -123,6 +128,7 @@ export default function ContasCartoesBody({ contas, cartoes }: { contas: Item[];
         </div>
       )}
 
+</>}>
       {/* Contas */}
       <Card className="p-0 overflow-hidden border-surface-border/60">
         <div className="px-4 pt-4 pb-3 mb-1 border-b border-surface-border/40">
@@ -200,6 +206,6 @@ export default function ContasCartoesBody({ contas, cartoes }: { contas: Item[];
           </div>
         )}
       </Card>
-    </>
+    </SplitLayout>
   );
 }

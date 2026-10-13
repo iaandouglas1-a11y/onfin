@@ -1,5 +1,7 @@
 "use client";
 
+import { SplitLayout } from "@/components/SplitLayout";
+import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import { Plus, X, Receipt } from "lucide-react";
 import { Card, FormGroup, Input, Select, EmptyState } from "@/components/ui";
@@ -42,17 +44,18 @@ export default function FaturasBody({
   faturasResumo,
 }: Props) {
   const [painelAberto, setPainelAberto] = useState(false);
+  const isDesktop = useIsDesktop();
   const [aba, setAba] = useState<"aberto" | "pago">("aberto");
 
   const lista = aba === "aberto" ? faturasAbertas : faturasPagas;
 
   return (
-    <>
+<SplitLayout aside={<>
       {/* Criar fatura — mesmo padrão de "Nova transação" */}
       <button
         type="button"
         onClick={() => setPainelAberto((v) => !v)}
-        className={`w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
+        className={`md:hidden w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
           painelAberto
             ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]"
             : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
@@ -62,7 +65,7 @@ export default function FaturasBody({
         Criar fatura
       </button>
 
-      {painelAberto && (
+      {(isDesktop || painelAberto) && (
         <div className="border border-[#5DA832]/30 rounded-xl p-4 bg-[#5DA832]/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#5DA832] font-semibold text-xs">
@@ -72,7 +75,7 @@ export default function FaturasBody({
             <button
               type="button"
               onClick={() => setPainelAberto(false)}
-              className="p-1 text-slate-500 hover:text-slate-300 rounded transition-colors"
+              className="md:hidden p-1 text-slate-500 hover:text-slate-300 rounded transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
@@ -118,6 +121,7 @@ export default function FaturasBody({
         </div>
       )}
 
+</>}>
       {/* Em aberto / Pagas — só um bloco visível por vez */}
       <div className="flex gap-1.5 bg-surface-2/60 rounded-xl p-1">
         <button
@@ -185,6 +189,6 @@ export default function FaturasBody({
           )}
         </div>
       </Card>
-    </>
+    </SplitLayout>
   );
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import { SplitLayout } from "@/components/SplitLayout";
+import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import {
   Plus, X, ChevronDown, ChevronUp, Trash2, FolderOpen, Pencil, Check,
@@ -137,13 +139,14 @@ function CategoriaGroup({ label, tone, categorias, defaultOpen }: { label: strin
 
 export default function CategoriasBody({ despesas, receitas }: Props) {
   const [painelAberto, setPainelAberto] = useState(false);
+  const isDesktop = useIsDesktop();
   const [novoIcone, setNovoIcone] = useState("Tag");
   const total = despesas.length + receitas.length;
   return (
-    <div className="space-y-4">
-      <button type="button" onClick={() => setPainelAberto((v) => !v)} className={`w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${painelAberto ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]" : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"}`}><Plus className="h-3.5 w-3.5" />Nova categoria</button>
-      {painelAberto && <div className="border border-[#5DA832]/30 rounded-xl p-4 bg-[#5DA832]/5 space-y-2">
-        <div className="flex items-center justify-between"><div className="flex items-center gap-2 text-[#5DA832] font-semibold text-xs"><Plus className="h-4 w-4" /><span>Nova categoria</span></div><button type="button" onClick={() => setPainelAberto(false)} className="p-1 text-slate-500 hover:text-slate-300 rounded"><X className="h-4 w-4" /></button></div>
+<SplitLayout aside={<>
+      <button type="button" onClick={() => setPainelAberto((v) => !v)} className={`md:hidden w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${painelAberto ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]" : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"}`}><Plus className="h-3.5 w-3.5" />Nova categoria</button>
+      {(isDesktop || painelAberto) && <div className="border border-[#5DA832]/30 rounded-xl p-4 bg-[#5DA832]/5 space-y-2">
+        <div className="flex items-center justify-between"><div className="flex items-center gap-2 text-[#5DA832] font-semibold text-xs"><Plus className="h-4 w-4" /><span>Nova categoria</span></div><button type="button" onClick={() => setPainelAberto(false)} className="md:hidden p-1 text-slate-500 hover:text-slate-300 rounded"><X className="h-4 w-4" /></button></div>
         <form action={async (formData) => { await saveCategoria(formData); setPainelAberto(false); }} className="space-y-2">
           <FormGroup label="Nome"><Input name="nome" required placeholder="Ex: Assinaturas" className="text-sm" /></FormGroup>
           <FormGroup label="Tipo"><Select name="tipo" required defaultValue="" className="text-sm"><option value="" disabled>Selecione...</option><option value="despesa">Despesa</option><option value="receita">Receita</option></Select></FormGroup>
@@ -151,7 +154,8 @@ export default function CategoriasBody({ despesas, receitas }: Props) {
           <button type="submit" className="w-full h-11 inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#5DA832] hover:bg-[#6fc23b] text-[#0A0A0A] text-sm font-semibold"><Plus className="h-4 w-4" />Adicionar</button>
         </form>
       </div>}
+</>}>
       {total === 0 ? <Card className="p-0 overflow-hidden"><EmptyState icon={<FolderOpen className="h-10 w-10" />} title="Nenhuma categoria cadastrada" description="Crie sua primeira categoria para organizar suas movimentações" /></Card> : <><CategoriaGroup label="Despesas" tone="red" categorias={despesas} defaultOpen /><CategoriaGroup label="Receitas" tone="green" categorias={receitas} defaultOpen /></>}
-    </div>
+    </SplitLayout>
   );
 }

@@ -51,7 +51,7 @@ export async function criarNota() {
     .single();
   if (error) throw new Error(error.message);
 
-  revalidatePath("/notas");
+  revalidatePath("/notas", "layout");
   redirect(`/notas/${data.id}`);
 }
 
@@ -69,7 +69,7 @@ export async function saveNota(formData: FormData) {
     .eq("id", parsed.data.id);
   if (error) throw new Error(error.message);
 
-  revalidatePath("/notas");
+  revalidatePath("/notas", "layout");
   revalidatePath(`/notas/${parsed.data.id}`);
 }
 
@@ -79,7 +79,7 @@ export async function deleteNota(formData: FormData) {
   const { error } = await (s.from("notas") as any).delete().eq("id", id);
   if (error) throw new Error(error.message);
 
-  revalidatePath("/notas");
+  revalidatePath("/notas", "layout");
   redirect("/notas");
 }
 
@@ -90,7 +90,7 @@ export async function togglePinNota(formData: FormData) {
   const { error } = await (s.from("notas") as any).update({ fixada: !fixada }).eq("id", id);
   if (error) throw new Error(error.message);
 
-  revalidatePath("/notas");
+  revalidatePath("/notas", "layout");
   revalidatePath(`/notas/${id}`);
 }
 
@@ -101,6 +101,6 @@ export async function arquivarNota(formData: FormData) {
   const { error } = await (s.from("notas") as any).update({ status }).eq("id", id);
   if (error) throw new Error(error.message);
 
-  revalidatePath("/notas");
+  revalidatePath("/notas", "layout");
   redirect("/notas");
 }

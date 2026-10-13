@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Plus, StickyNote, ListChecks } from "lucide-react";
 import { Card, EmptyState, ListGroup, ListRow } from "@/components/ui";
 import { dateBR } from "@/lib/format";
@@ -17,6 +18,7 @@ const ABAS: { key: Aba; label: string }[] = [
 
 export default function NotasBody({ notas }: { notas: Nota[] }) {
   const [aba, setAba] = useState<Aba>("todas");
+  const pathname = usePathname();
 
   const lista = useMemo(() => {
     if (aba === "fixadas") return notas.filter((n) => n.fixada && n.status === "ativa");
@@ -79,6 +81,7 @@ export default function NotasBody({ notas }: { notas: Nota[] }) {
                 <ListRow
                   key={n.id}
                   href={`/notas/${n.id}`}
+                  active={pathname === `/notas/${n.id}`}
                   icon={checklist.length > 0 ? ListChecks : StickyNote}
                   tone={n.fixada ? "green" : "gray"}
                   title={n.titulo?.trim() || "Nova nota"}

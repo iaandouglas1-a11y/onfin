@@ -1,5 +1,6 @@
 "use client";
 
+import { SplitLayout } from "@/components/SplitLayout";
 import { useState, useMemo } from "react";
 import { Plus, TrendingDown } from "lucide-react";
 import { Card, StatPill } from "@/components/ui";
@@ -68,7 +69,7 @@ export default function DividasBody({
   }, [fluxo, filtroFluxo, dataInicio, dataFim, hoje]);
 
   return (
-    <>
+<SplitLayout top={<>
       {/* Métricas — 3 pills */}
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-surface/50 border border-surface-border/40 rounded-xl p-3.5">
@@ -86,9 +87,11 @@ export default function DividasBody({
         <p className="text-lg font-semibold text-amber-400">{currency(saldoAtual)}</p>
       </div>
 
+</>} aside={<>
       {/* Botões — Nova dívida | Novo pagamento */}
       <DividaQuickForms categorias={categorias} contas={contas} dividasAbertas={dividasAbertas} />
 
+</>}>
       {/* Toggle Aberto/Liquidado */}
       <div className="flex gap-1.5 bg-surface-2/60 rounded-xl p-1">
         <button
@@ -265,6 +268,6 @@ export default function DividasBody({
           )}
         </div>
       </Card>
-    </>
+    </SplitLayout>
   );
 }

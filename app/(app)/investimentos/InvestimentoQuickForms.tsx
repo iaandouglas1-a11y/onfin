@@ -1,5 +1,6 @@
 "use client";
 
+import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import { Plus, X, Repeat, TrendingUp } from "lucide-react";
 import { saveInvestimento, saveMovimento, saveSaldoMensal } from "@/app/(app)/actions_investimentos";
@@ -24,6 +25,8 @@ const SUBCATEGORIAS: Record<"renda_fixa" | "renda_variavel", string[]> = {
  * (com botão de fechar) só quando clicado. */
 export default function InvestimentoQuickForms({ contas, investimentos, mesAtual }: Props) {
   const [aberto, setAberto] = useState<Painel>(null);
+  const isDesktop = useIsDesktop();
+  const painel = aberto ?? (isDesktop ? "movimento" : null);
   const [tipoInv, setTipoInv] = useState<"renda_fixa" | "renda_variavel">("renda_fixa");
 
   const toggle = (p: Painel) => setAberto((v) => (v === p ? null : p));
@@ -43,7 +46,7 @@ export default function InvestimentoQuickForms({ contas, investimentos, mesAtual
           type="button"
           onClick={() => toggle("investimento")}
           className={`flex flex-col items-center justify-center gap-1 px-2 py-2.5 rounded-xl text-[11.5px] font-semibold border text-center leading-tight transition-all duration-200 ${
-            aberto === "investimento"
+            painel === "investimento"
               ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]"
               : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
           }`}
@@ -55,7 +58,7 @@ export default function InvestimentoQuickForms({ contas, investimentos, mesAtual
           type="button"
           onClick={() => toggle("movimento")}
           className={`flex flex-col items-center justify-center gap-1 px-2 py-2.5 rounded-xl text-[11.5px] font-semibold border text-center leading-tight transition-all duration-200 ${
-            aberto === "movimento"
+            painel === "movimento"
               ? "bg-info/15 border-info/40 text-[#CBD5E1]"
               : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
           }`}
@@ -67,7 +70,7 @@ export default function InvestimentoQuickForms({ contas, investimentos, mesAtual
           type="button"
           onClick={() => toggle("saldo")}
           className={`flex flex-col items-center justify-center gap-1 px-2 py-2.5 rounded-xl text-[11.5px] font-semibold border text-center leading-tight transition-all duration-200 ${
-            aberto === "saldo"
+            painel === "saldo"
               ? "bg-warning/15 border-warning/40 text-[#f5a524]"
               : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
           }`}
@@ -78,14 +81,14 @@ export default function InvestimentoQuickForms({ contas, investimentos, mesAtual
       </div>
 
       {/* Painel: Novo investimento */}
-      {aberto === "investimento" && (
+      {painel === "investimento" && (
         <div className="border border-[#5DA832]/30 rounded-xl p-4 bg-[#5DA832]/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#5DA832] font-semibold text-xs">
               <Plus className="h-4 w-4" />
               <span>Novo investimento</span>
             </div>
-            <button type="button" onClick={() => setAberto(null)} className="p-1 text-slate-500 hover:text-slate-300 rounded transition-colors">
+            <button type="button" onClick={() => setAberto(null)} className="md:hidden p-1 text-slate-500 hover:text-slate-300 rounded transition-colors">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -140,14 +143,14 @@ export default function InvestimentoQuickForms({ contas, investimentos, mesAtual
       )}
 
       {/* Painel: Registrar aporte/resgate */}
-      {aberto === "movimento" && (
+      {painel === "movimento" && (
         <div className="border border-info/30 rounded-xl p-4 bg-info/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#CBD5E1] font-semibold text-xs">
               <Repeat className="h-4 w-4" />
               <span>Registrar Aporte / Resgate</span>
             </div>
-            <button type="button" onClick={() => setAberto(null)} className="p-1 text-slate-500 hover:text-slate-300 rounded transition-colors">
+            <button type="button" onClick={() => setAberto(null)} className="md:hidden p-1 text-slate-500 hover:text-slate-300 rounded transition-colors">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -196,14 +199,14 @@ export default function InvestimentoQuickForms({ contas, investimentos, mesAtual
       )}
 
       {/* Painel: Atualizar saldo mensal */}
-      {aberto === "saldo" && (
+      {painel === "saldo" && (
         <div className="border border-warning/30 rounded-xl p-4 bg-warning/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#f5a524] font-semibold text-xs">
               <TrendingUp className="h-4 w-4" />
               <span>Atualizar Saldo Mensal</span>
             </div>
-            <button type="button" onClick={() => setAberto(null)} className="p-1 text-slate-500 hover:text-slate-300 rounded transition-colors">
+            <button type="button" onClick={() => setAberto(null)} className="md:hidden p-1 text-slate-500 hover:text-slate-300 rounded transition-colors">
               <X className="h-4 w-4" />
             </button>
           </div>

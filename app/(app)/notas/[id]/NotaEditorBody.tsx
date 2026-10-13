@@ -163,7 +163,7 @@ export default function NotaEditorBody({ nota }: { nota: Nota }) {
           <Link
             href="/notas"
             aria-label="Voltar para notas"
-            className="shrink-0 flex items-center justify-center text-ink-secondary"
+            className="md:hidden shrink-0 flex items-center justify-center text-ink-secondary"
           >
             <ChevronLeft className="h-5 w-5" />
           </Link>

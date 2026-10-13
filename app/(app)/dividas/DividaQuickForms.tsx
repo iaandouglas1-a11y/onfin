@@ -1,5 +1,6 @@
 "use client";
 
+import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import { Plus, X, CircleDollarSign } from "lucide-react";
 import { saveDivida, savePagamento } from "@/app/(app)/actions_dividas";
@@ -17,6 +18,8 @@ interface Props {
  * completo (com botão de fechar) só quando clicado. */
 export default function DividaQuickForms({ categorias, contas, dividasAbertas }: Props) {
   const [aberto, setAberto] = useState<null | "divida" | "pagamento">(null);
+  const isDesktop = useIsDesktop();
+  const painel = aberto ?? (isDesktop ? "divida" : null);
 
   return (
     <div className="space-y-2.5">
@@ -25,7 +28,7 @@ export default function DividaQuickForms({ categorias, contas, dividasAbertas }:
           type="button"
           onClick={() => setAberto((v) => (v === "divida" ? null : "divida"))}
           className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
-            aberto === "divida"
+            painel === "divida"
               ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]"
               : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
           }`}
@@ -37,7 +40,7 @@ export default function DividaQuickForms({ categorias, contas, dividasAbertas }:
           type="button"
           onClick={() => setAberto((v) => (v === "pagamento" ? null : "pagamento"))}
           className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
-            aberto === "pagamento"
+            painel === "pagamento"
               ? "bg-info/15 border-info/40 text-[#CBD5E1]"
               : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
           }`}
@@ -48,14 +51,14 @@ export default function DividaQuickForms({ categorias, contas, dividasAbertas }:
       </div>
 
       {/* Painel: Nova dívida */}
-      {aberto === "divida" && (
+      {painel === "divida" && (
         <div className="border border-[#5DA832]/30 rounded-xl p-4 bg-[#5DA832]/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#5DA832] font-semibold text-xs">
               <Plus className="h-4 w-4" />
               <span>Nova dívida</span>
             </div>
-            <button type="button" onClick={() => setAberto(null)} className="p-1 text-slate-500 hover:text-slate-300 rounded transition-colors">
+            <button type="button" onClick={() => setAberto(null)} className="md:hidden p-1 text-slate-500 hover:text-slate-300 rounded transition-colors">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -92,14 +95,14 @@ export default function DividaQuickForms({ categorias, contas, dividasAbertas }:
       )}
 
       {/* Painel: Novo pagamento */}
-      {aberto === "pagamento" && (
+      {painel === "pagamento" && (
         <div className="border border-info/30 rounded-xl p-4 bg-info/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#CBD5E1] font-semibold text-xs">
               <CircleDollarSign className="h-4 w-4" />
               <span>Novo pagamento</span>
             </div>
-            <button type="button" onClick={() => setAberto(null)} className="p-1 text-slate-500 hover:text-slate-300 rounded transition-colors">
+            <button type="button" onClick={() => setAberto(null)} className="md:hidden p-1 text-slate-500 hover:text-slate-300 rounded transition-colors">
               <X className="h-4 w-4" />
             </button>
           </div>

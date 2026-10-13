@@ -1,13 +1,11 @@
-import { getNotas } from "@/lib/queries";
-import NotasBody from "./NotasBody";
+import { StickyNote } from "lucide-react";
 
-export default async function NotasPage() {
-  const notas = await getNotas();
-
+// Mobile: a lista vem do layout. Desktop: painel vazio até escolher/criar uma nota.
+export default function NotasPage() {
   return (
-    <div className="space-y-6">
-      <h1 className="hidden md:block text-[22px] font-semibold text-ink-primary tracking-tight px-1">Notas</h1>
-      <NotasBody notas={notas} />
+    <div className="hidden md:flex flex-col items-center justify-center gap-3 rounded-card border border-dashed border-surface-border/70 py-32 text-center">
+      <StickyNote className="h-10 w-10 text-slate-600" />
+      <p className="text-sm text-slate-500">Selecione uma nota na lista ou crie uma nova.</p>
     </div>
   );
 }

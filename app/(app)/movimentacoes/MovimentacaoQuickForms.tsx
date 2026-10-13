@@ -1,4 +1,5 @@
 "use client";
+import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Plus, X, ArrowLeftRight } from "lucide-react";
@@ -18,6 +19,8 @@ interface Props {
 export default function MovimentacaoQuickForms({ categorias, contas, cartoes, faturas, defaultTipo }: Props) {
   const searchParams = useSearchParams();
   const [aberto, setAberto] = useState<null | "transacao" | "transferencia">(null);
+  const isDesktop = useIsDesktop();
+  const painel = aberto ?? (isDesktop ? "transacao" : null);
   const [tipo, setTipo] = useState(defaultTipo === "receita" ? "receita" : "despesa");
   const [cartaoId, setCartaoId] = useState("");
   const [data, setData] = useState("");
@@ -42,18 +45,18 @@ export default function MovimentacaoQuickForms({ categorias, contas, cartoes, fa
   return (
     <div className="space-y-2.5">
       <div className="grid grid-cols-2 gap-2">
-        <button type="button" onClick={() => setAberto((v) => v === "transacao" ? null : "transacao")} className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${aberto === "transacao" ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]" : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"}`}>
+        <button type="button" onClick={() => setAberto((v) => v === "transacao" ? null : "transacao")} className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${painel === "transacao" ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]" : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"}`}>
           <Plus className="h-3.5 w-3.5" /> Nova transação
         </button>
-        <button type="button" onClick={() => setAberto((v) => v === "transferencia" ? null : "transferencia")} className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${aberto === "transferencia" ? "bg-info/15 border-info/40 text-[#CBD5E1]" : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"}`}>
+        <button type="button" onClick={() => setAberto((v) => v === "transferencia" ? null : "transferencia")} className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${painel === "transferencia" ? "bg-info/15 border-info/40 text-[#CBD5E1]" : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"}`}>
           <ArrowLeftRight className="h-3.5 w-3.5" /> Transferência
         </button>
       </div>
-      {aberto === "transacao" && (
+      {painel === "transacao" && (
         <div className="border border-[#5DA832]/30 rounded-xl p-4 bg-[#5DA832]/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#5DA832] font-semibold text-xs"><Plus className="h-4 w-4" /><span>Nova transação</span></div>
-            <button type="button" onClick={() => setAberto(null)} className="p-1 text-slate-500 hover:text-slate-300 rounded"><X className="h-4 w-4" /></button>
+            <button type="button" onClick={() => setAberto(null)} className="md:hidden p-1 text-slate-500 hover:text-slate-300 rounded"><X className="h-4 w-4" /></button>
           </div>
           <form action={saveMovimentacao} className="space-y-2">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 items-end">
@@ -77,9 +80,9 @@ export default function MovimentacaoQuickForms({ categorias, contas, cartoes, fa
           </form>
         </div>
       )}
-      {aberto === "transferencia" && (
+      {painel === "transferencia" && (
         <div className="border border-info/30 rounded-xl p-4 bg-info/5 space-y-2">
-          <div className="flex items-center justify-between"><div className="flex items-center gap-2 text-[#CBD5E1] font-semibold text-xs"><ArrowLeftRight className="h-4 w-4" /><span>Transferência entre Contas</span></div><button type="button" onClick={() => setAberto(null)} className="p-1 text-slate-500"><X className="h-4 w-4" /></button></div>
+          <div className="flex items-center justify-between"><div className="flex items-center gap-2 text-[#CBD5E1] font-semibold text-xs"><ArrowLeftRight className="h-4 w-4" /><span>Transferência entre Contas</span></div><button type="button" onClick={() => setAberto(null)} className="md:hidden p-1 text-slate-500"><X className="h-4 w-4" /></button></div>
           <form action={realizarTransferencia} className="space-y-2">
             <div className="grid grid-cols-2 gap-2"><FormGroup label="Conta Origem"><Select name="conta_origem_id" required className="text-sm"><option value="">Selecione...</option>{contas.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}</Select></FormGroup><FormGroup label="Conta Destino"><Select name="conta_destino_id" required className="text-sm"><option value="">Selecione...</option>{contas.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}</Select></FormGroup></div>
             <div className="grid grid-cols-2 gap-2"><FormGroup label="Valor"><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-semibold text-xs">R$</span><Input name="valor" type="number" step="0.01" min="0.01" required className="pl-8 text-sm font-semibold" /></div></FormGroup><FormGroup label="Data"><Input name="data" type="date" required className="text-sm" /></FormGroup></div>
