@@ -28,7 +28,7 @@ type Tone = "green" | "red" | "amber" | "neutral";
 
 // Contas: saldo 0 → neutral · negativo → red · positivo → green
 function contaTone(saldo: number): { icon: IconTone; text: Tone } {
-  if (saldo === 0) return { icon: "gray", text: "neutral" };
+  if (Math.abs(saldo) < 0.005) return { icon: "gray", text: "neutral" };
   return saldo > 0 ? { icon: "green", text: "green" } : { icon: "red", text: "red" };
 }
 

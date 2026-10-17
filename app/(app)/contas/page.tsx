@@ -2,9 +2,11 @@ import { Surface, AmountText } from "@/components/ui";
 import { getFinancialOverview } from "@/lib/financialengine";
 import ContasCartoesBody from "./ContasCartoesBody";
 
-// Normaliza -0 para 0 (evita apresentação de -0,00)
+// Normaliza para centavos e evita que resíduos decimais do cálculo alterem a cor
+// de um saldo que é exibido como R$ 0,00.
 function normalizeZero(value: number): number {
-  return Object.is(value, -0) ? 0 : value;
+  const rounded = Math.round((value + Number.EPSILON) * 100) / 100;
+  return Object.is(rounded, -0) ? 0 : rounded;
 }
 
 export default async function ContasECartoesPage() {
