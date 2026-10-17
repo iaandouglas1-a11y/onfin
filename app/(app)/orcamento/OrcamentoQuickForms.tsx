@@ -1,6 +1,5 @@
 "use client";
 
-import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
 import { saveOrcamentoItem, saveOrcamentoParcela, sugerirValorCategoria } from "@/app/(app)/actions_orcamento";
@@ -69,8 +68,7 @@ function DiaReferenciaField({ value, onChange }: { value: string; onChange: (v: 
  * oferecemos como sugestão de valor. */
 export default function OrcamentoQuickForms({ competencia, categorias }: Props) {
   const [aberto, setAberto] = useState<null | "receita" | "gasto">(null);
-  const isDesktop = useIsDesktop();
-  const painel = aberto ?? (isDesktop ? "gasto" : null);
+  const painel = aberto;
   const [subtipoGasto, setSubtipoGasto] = useState<SubtipoGasto>("fixo");
   const [valorGasto, setValorGasto] = useState("");
   const [diaGasto, setDiaGasto] = useState("1");

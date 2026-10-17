@@ -1,6 +1,5 @@
 "use client";
 
-import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import { Plus, X, CircleDollarSign } from "lucide-react";
 import { saveDivida, savePagamento } from "@/app/(app)/actions_dividas";
@@ -18,8 +17,7 @@ interface Props {
  * completo (com botão de fechar) só quando clicado. */
 export default function DividaQuickForms({ categorias, contas, dividasAbertas }: Props) {
   const [aberto, setAberto] = useState<null | "divida" | "pagamento">(null);
-  const isDesktop = useIsDesktop();
-  const painel = aberto ?? (isDesktop ? "divida" : null);
+  const painel = aberto;
 
   return (
     <div className="space-y-2.5">

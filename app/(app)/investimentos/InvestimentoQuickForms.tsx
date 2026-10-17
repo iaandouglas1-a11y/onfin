@@ -1,6 +1,5 @@
 "use client";
 
-import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import { Plus, X, Repeat, TrendingUp } from "lucide-react";
 import { saveInvestimento, saveMovimento, saveSaldoMensal } from "@/app/(app)/actions_investimentos";
@@ -25,8 +24,7 @@ const SUBCATEGORIAS: Record<"renda_fixa" | "renda_variavel", string[]> = {
  * (com botão de fechar) só quando clicado. */
 export default function InvestimentoQuickForms({ contas, investimentos, mesAtual }: Props) {
   const [aberto, setAberto] = useState<Painel>(null);
-  const isDesktop = useIsDesktop();
-  const painel = aberto ?? (isDesktop ? "movimento" : null);
+  const painel = aberto;
   const [tipoInv, setTipoInv] = useState<"renda_fixa" | "renda_variavel">("renda_fixa");
 
   const toggle = (p: Painel) => setAberto((v) => (v === p ? null : p));

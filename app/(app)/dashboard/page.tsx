@@ -75,7 +75,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       </div>
 
       {/* ── Lançar: receita / despesa / transferir ──────────────────── */}
-      <div className="md:hidden grid grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-3 gap-2.5">
         <Link href="/movimentacoes?tipo=receita#lancamento" className="flex items-center justify-center gap-1.5 px-2.5 py-3 rounded-[14px] text-[12.5px] font-semibold bg-[#5DA832] hover:bg-[#6fc23b] text-[#0A0A0A] active:scale-[0.97] transition-all">
           <ArrowUpRight className="h-[18px] w-[18px]" /> Receita
         </Link>
@@ -88,7 +88,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       </div>
 
       {/* ── Acesso rápido aos módulos ───────────────────────────────── */}
-      <div className="md:hidden grid grid-cols-5 gap-0.5">
+      <div className="grid grid-cols-5 gap-0.5">
         {([
           { href: "/orcamento", label: "Orçamento", icon: ChartPie },
           { href: "/dividas", label: "Dívidas", icon: TrendingDown },
@@ -200,7 +200,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       </div>
 
       {/* ── Análises ──────────────────────────────────────────────── */}
-      <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-1 xl:order-1">
+      <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-2 xl:order-1">
         <Card className="flex flex-col h-full">
           <div className="mb-5 pb-3 border-b border-surface-border/50">
             <h2 className="text-[15px] font-semibold text-white">Despesas por categoria</h2>
@@ -225,10 +225,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             <EvolutionChart data={dre} />
           </div>
         </Card>
-      </div>
-      </div>
-
-      <Card className="flex flex-col">
+      <Card className="flex flex-col lg:col-span-2">
         <div className="mb-5 pb-3 border-b border-surface-border/50">
           <h2 className="text-[15px] font-semibold text-white">Fluxo de caixa</h2>
           <p className="text-xs text-ink-tertiary mt-1">Saldo inicial → entradas → saídas → saldo final</p>
@@ -237,6 +234,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           <WaterfallChart saldoInicial={saldo} entradas={receitas} saidas={despesas} />
         </div>
       </Card>
+      </div>
+      </div>
     </div>
   );
 }

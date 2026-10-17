@@ -1,5 +1,4 @@
 "use client";
-import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Plus, X, ArrowLeftRight } from "lucide-react";
@@ -19,8 +18,7 @@ interface Props {
 export default function MovimentacaoQuickForms({ categorias, contas, cartoes, faturas, defaultTipo }: Props) {
   const searchParams = useSearchParams();
   const [aberto, setAberto] = useState<null | "transacao" | "transferencia">(null);
-  const isDesktop = useIsDesktop();
-  const painel = aberto ?? (isDesktop ? "transacao" : null);
+  const painel = aberto;
   const [tipo, setTipo] = useState(defaultTipo === "receita" ? "receita" : "despesa");
   const [cartaoId, setCartaoId] = useState("");
   const [data, setData] = useState("");

@@ -1,7 +1,6 @@
 "use client";
 
 import { SplitLayout } from "@/components/SplitLayout";
-import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState, useMemo } from "react";
 import { Plus, X, Trash2 } from "lucide-react";
 import { Card, FormGroup, Input, Select } from "@/components/ui";
@@ -32,7 +31,6 @@ export default function HonorariosBody({
   contas = [],
 }: Props) {
   const [painelAberto, setPainelAberto] = useState(false);
-  const isDesktop = useIsDesktop();
   const [filtroData, setFiltroData] = useState<"este_mes" | "mes_anterior" | "3_meses" | "personalizado">("este_mes");
   const [dataInicio, setDataInicio] = useState<string>("");
   const [dataFim, setDataFim] = useState<string>("");
@@ -108,7 +106,7 @@ export default function HonorariosBody({
       <button
         type="button"
         onClick={() => setPainelAberto((v) => !v)}
-        className={`md:hidden w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
+        className={`w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-[13px] font-semibold border transition-all duration-200 ${
           painelAberto
             ? "bg-[#5DA832]/15 border-[#5DA832]/40 text-[#8FCB5E]"
             : "bg-surface border-surface-border/60 text-ink-secondary hover:text-ink-primary"
@@ -118,7 +116,7 @@ export default function HonorariosBody({
         Lançar honorário
       </button>
 
-      {(isDesktop || painelAberto) && (
+      {painelAberto && (
         <div className="border border-[#5DA832]/30 rounded-xl p-4 bg-[#5DA832]/5 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-[#5DA832] font-semibold text-xs">

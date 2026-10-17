@@ -1,7 +1,6 @@
 "use client";
 
 import { SplitLayout } from "@/components/SplitLayout";
-import { useIsDesktop } from "@/components/useIsDesktop";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Pencil, X, Wallet, CreditCard, Archive, ArchiveRestore } from "lucide-react";
@@ -44,8 +43,7 @@ function cartaoTone(usado: number, limite: number): { icon: IconTone; text: Tone
 export default function ContasCartoesBody({ contas, cartoes }: { contas: Item[]; cartoes: Item[] }) {
   const router = useRouter();
   const [painelAberto, setPainelAberto] = useState<null | "editar" | "adicionar">(null);
-  const isDesktop = useIsDesktop();
-  const painel = painelAberto ?? (isDesktop ? "adicionar" : null);
+  const painel = painelAberto;
   const [aba, setAba] = useState<"ativos" | "arquivados">("ativos");
 
   const todosItens = [...contas, ...cartoes];
