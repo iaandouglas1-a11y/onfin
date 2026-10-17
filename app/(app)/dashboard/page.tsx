@@ -177,7 +177,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       </div>
 
       {/* ── Últimas movimentações ─────────────────────────────────── */}
-      <div className="space-y-6 xl:grid xl:grid-cols-[minmax(0,1fr)_380px] xl:gap-6 xl:space-y-0 xl:items-start">
+      <div className="space-y-6 xl:grid xl:grid-cols-1 xl:gap-6 xl:space-y-0 xl:items-start">
       <div className="min-w-0 xl:order-2">
         <div className="flex items-center justify-between mb-2.5 px-1">
           <h3 className="text-[15px] font-semibold text-ink-primary">Últimas movimentações</h3>
