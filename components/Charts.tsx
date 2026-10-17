@@ -141,17 +141,17 @@ export function CategoryPie({
 
   // DESKTOP
   return (
-    <div className="w-full flex flex-row items-center gap-6">
+    <div className="w-full min-w-0 flex flex-row items-center gap-6">
       {/* CHART */}
-      <div className="w-1/2 h-[300px]">
+      <div className="w-[44%] min-w-0 h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={sorted}
               dataKey="value"
               nameKey="name"
-              outerRadius={95}
-              innerRadius={55}
+                outerRadius="72%"
+                innerRadius="42%"
               stroke="none"
             >
               {sorted.map((_, i) => (
@@ -164,7 +164,7 @@ export function CategoryPie({
       </div>
 
       {/* LEGENDA */}
-      <div className="w-1/2 flex flex-col gap-3">
+      <div className="w-[56%] min-w-0 flex flex-col gap-3">
         {sorted.map((item, index) => {
           const percent = total ? (item.value / total) * 100 : 0;
 
@@ -202,18 +202,19 @@ export function EvolutionChart({ data }: any) {
 
   return (
     <ResponsiveContainer width="100%" height={isMobile ? 280 : 320}>
-      <LineChart data={data}>
+      <LineChart data={data} margin={{ top: 8, right: 18, bottom: 8, left: 8 }}>
         <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} opacity={0.5} />
 
         <XAxis
           dataKey="mes"
-          tick={{ fill: chartTextColor, fontSize: isMobile ? 12 : 14 }}
+          interval="preserveStartEnd"
+          tick={{ fill: chartTextColor, fontSize: isMobile ? 12 : 12 }}
           stroke={chartGridColor}
         />
 
         <YAxis
           tickFormatter={formatCurrency}
-          tick={{ fill: chartTextColor, fontSize: isMobile ? 12 : 14 }}
+          tick={{ fill: chartTextColor, fontSize: isMobile ? 12 : 12 }}
           stroke={chartGridColor}
         />
 
@@ -331,11 +332,11 @@ export function WaterfallChart({
 
   return (
     <ResponsiveContainer width="100%" height={320}>
-      <BarChart data={data} barCategoryGap="30%">
+      <BarChart data={data} barCategoryGap="30%" margin={{ top: 8, right: 18, bottom: 12, left: 8 }}>
         <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} opacity={0.5} vertical={false} />
         <XAxis
           dataKey="label"
-          tick={{ fill: chartTextColor, fontSize: 13 }}
+          tick={{ fill: chartTextColor, fontSize: 12 }}
           stroke={chartGridColor}
         />
         <YAxis
