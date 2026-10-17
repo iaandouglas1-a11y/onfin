@@ -88,7 +88,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       </div>
 
       {/* ── Acesso rápido aos módulos ───────────────────────────────── */}
-      <div className="grid grid-cols-5 gap-0.5">
+      <div className="grid grid-cols-5 gap-0.5 md:hidden">
         {([
           { href: "/orcamento", label: "Orçamento", icon: ChartPie },
           { href: "/dividas", label: "Dívidas", icon: TrendingDown },
