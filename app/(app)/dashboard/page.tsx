@@ -75,7 +75,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       </div>
 
       {/* ── Lançar: receita / despesa / transferir ──────────────────── */}
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-3 gap-2.5 md:hidden">
         <Link href="/movimentacoes?tipo=receita#lancamento" className="flex items-center justify-center gap-1.5 px-2.5 py-3 rounded-[14px] text-[12.5px] font-semibold bg-[#5DA832] hover:bg-[#6fc23b] text-[#0A0A0A] active:scale-[0.97] transition-all">
           <ArrowUpRight className="h-[18px] w-[18px]" /> Receita
         </Link>
