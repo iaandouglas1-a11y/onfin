@@ -28,16 +28,17 @@ type Tone = "green" | "red" | "amber" | "neutral";
 
 // Contas: saldo 0 → neutral · negativo → red · positivo → green
 function contaTone(saldo: number): { icon: IconTone; text: Tone } {
-  if (saldo === 0) return { icon: "gray", text: "green" };
+  if (saldo === 0) return { icon: "gray", text: "neutral" };
   return saldo > 0 ? { icon: "green", text: "green" } : { icon: "red", text: "red" };
 }
 
-// Cartões: nada usado → green · consumido até 50% → neutral · acima de 50% → red
+// Cartões: disponível → branco · até 50% usado → verde · até 90% → âmbar · 100%+ → vermelho
 function cartaoTone(usado: number, limite: number): { icon: IconTone; text: Tone; barColor: string } {
-  if (usado <= 0) return { icon: "green", text: "green", barColor: "#5DA832" };
   const pct = limite > 0 ? (usado / limite) * 100 : 0;
-  if (pct > 50) return { icon: "red", text: "red", barColor: "#f87171" };
-  return { icon: "gray", text: "neutral", barColor: "#94A3B8" };
+  if (usado <= 0 || pct <= 0) return { icon: "gray", text: "neutral", barColor: "#94A3B8" };
+  if (pct <= 50) return { icon: "green", text: "green", barColor: "#5DA832" };
+  if (pct <= 90) return { icon: "amber", text: "amber", barColor: "#F5A524" };
+  return { icon: "red", text: "red", barColor: "#f87171" };
 }
 
 export default function ContasCartoesBody({ contas, cartoes }: { contas: Item[]; cartoes: Item[] }) {

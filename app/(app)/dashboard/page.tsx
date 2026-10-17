@@ -64,7 +64,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   // Últimos lançamentos, mais recentes primeiro — pra seção "Últimas movimentações"
   const recentes = [...(monthMovs as any[])]
     .sort((a, b) => (a.data < b.data ? 1 : -1))
-    .slice(0, 5);
+    .slice(0, 10);
 
   return (
     <div className="space-y-6">

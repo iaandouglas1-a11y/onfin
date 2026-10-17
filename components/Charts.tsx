@@ -386,7 +386,9 @@ export function WaterfallChart({
                   textAnchor="middle"
                   dominantBaseline="auto"
                 >
-                  {formatCurrency(Math.abs(value))}
+                  {data[props.index]?.label === "Saldo Inicial" || data[props.index]?.label === "Saldo Final"
+                    ? formatCurrency(Number(value))
+                    : formatCurrency(Math.abs(Number(value)))}
                 </text>
               );
             }}
