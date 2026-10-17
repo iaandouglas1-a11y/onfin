@@ -28,7 +28,7 @@ export async function getContasWithMovs() {
   }; 
 }
 
-export async function getMovimentacoes(filters?: { inicio?: string; fim?: string; tipo?: "receita" | "despesa" | ""; categoriaId?: string }) { 
+export async function getMovimentacoes(filters?: { inicio?: string; fim?: string; tipo?: "receita" | "despesa" | ""; categoriaId?: string; contaId?: string }) {
   noStore(); 
   const s = await createServerSupabaseClient(); 
   let q = s.from("movimentacoes").select("*, categorias(nome, icone), contas(nome), cartoes(nome), faturas(data_vencimento)").order("data", { ascending: false });
@@ -36,6 +36,7 @@ export async function getMovimentacoes(filters?: { inicio?: string; fim?: string
   if (filters?.fim) q = q.lte("data", filters.fim); 
   if (filters?.tipo) q = q.eq("tipo", filters.tipo); 
   if (filters?.categoriaId) q = q.eq("categoria_id", filters.categoriaId); 
+  if (filters?.contaId) q = q.eq("conta_id", filters.contaId);
   const { data, error } = await q; 
   if (error) throw error; 
   return (data || []) as any[]; 

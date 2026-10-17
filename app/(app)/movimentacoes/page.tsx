@@ -10,6 +10,7 @@ import { clsx } from "clsx";
 import FiltroDataPersist from "@/components/FiltroDataPersist";
 import MovimentacaoQuickForms from "./MovimentacaoQuickForms";
 import EditarMovimentacaoBtn from "./EditarMovimentacaoBtn";
+import ExportarMovimentacoesBtn from "./ExportarMovimentacoesBtn";
 
 const MESES_RAPIDOS = [
   { label: "Este mês", offset: 0 },
@@ -47,7 +48,7 @@ function withParam(sp: Record<string, string | undefined>, key: string, value: s
 export default async function MovimentacoesPage({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
   const sp = await searchParams;
   const [movs, categorias, contasData, cardsData] = await Promise.all([
-    getMovimentacoes({ inicio: sp.inicio, fim: sp.fim, tipo: sp.tipo as any, categoriaId: sp.categoria }),
+    getMovimentacoes({ inicio: sp.inicio, fim: sp.fim, tipo: sp.tipo as any, categoriaId: sp.categoria, contaId: sp.conta }),
     getCategorias(),
     getContasWithMovs(),
     getCartoesEFaturas(),
@@ -56,6 +57,22 @@ export default async function MovimentacoesPage({ searchParams }: { searchParams
   const movsVisiveis = (movs as any[]).filter((m) => !(sp.tipo && isTransferencia(m)));
   const receitasTotal = movsVisiveis.filter(m => m.tipo === "receita" && !isTransferencia(m)).reduce((s, m) => s + Number(m.valor), 0);
   const despesasTotal = movsVisiveis.filter(m => m.tipo === "despesa" && !isTransferencia(m)).reduce((s, m) => s + Number(m.valor), 0);
+  const exportRows = movsVisiveis.map((m: any) => ({
+    id: String(m.id ?? ""),
+    tipo: String(m.tipo ?? ""),
+    valor: Number(m.valor ?? 0),
+    data: String(m.data ?? ""),
+    categoria_id: String(m.categoria_id ?? ""),
+    categoria: String(m.categorias?.nome ?? m.categoria_id ?? ""),
+    conta_id: String(m.conta_id ?? ""),
+    banco: String(m.contas?.nome ?? m.conta_id ?? ""),
+    cartao_id: String(m.cartao_id ?? ""),
+    cartao: String(m.cartoes?.nome ?? m.cartao_id ?? ""),
+    fatura_id: String(m.fatura_id ?? ""),
+    fatura: String(m.faturas?.data_vencimento ?? m.fatura_id ?? ""),
+    status: String(m.status ?? ""),
+    descricao: String(m.descricao ?? ""),
+  }));
 
   // Apenas faturas em aberto podem receber novos lançamentos — faturas já pagas ficam de fora
   const contasAtivas = (contasData.contas as any[]).filter((c) => c.ativo !== false);
@@ -152,7 +169,7 @@ export default async function MovimentacoesPage({ searchParams }: { searchParams
           })}
         </div>
 
-        {(sp.inicio || sp.fim || sp.tipo || sp.categoria) && (
+        {(sp.inicio || sp.fim || sp.tipo || sp.categoria || sp.conta) && (
           <a
             href="/movimentacoes"
             title="Limpar filtros"
@@ -178,9 +195,14 @@ export default async function MovimentacoesPage({ searchParams }: { searchParams
               <option value="">Todas categorias</option>
               {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
             </Select>
+            <Select name="conta" defaultValue={sp.conta ?? ""} className="h-11 text-xs w-full">
+              <option value="">Todos os bancos</option>
+              {(contasData.contas as any[]).map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
+            </Select>
             <Button type="submit" variant="secondary" className="w-full h-8 text-xs">Aplicar</Button>
           </form>
         </details>
+        <ExportarMovimentacoesBtn rows={exportRows} />
       </div>
 
       {/* Listagem agrupada por dia */}
