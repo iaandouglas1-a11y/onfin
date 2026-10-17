@@ -9,13 +9,9 @@ type ExportMovimentacao = {
   tipo: string;
   valor: number | string;
   data: string;
-  categoria_id: string;
   categoria: string;
-  conta_id: string;
   banco: string;
-  cartao_id: string;
   cartao: string;
-  fatura_id: string;
   fatura: string;
   status: string;
   descricao: string;
@@ -34,24 +30,19 @@ export default function ExportarMovimentacoesBtn({ rows }: { rows: ExportMovimen
         Tipo: row.tipo,
         Valor: Number(row.valor),
         Data: row.data,
-        Categoria_ID: row.categoria_id,
         Categoria: row.categoria,
-        Conta_ID: row.conta_id,
         Banco: row.banco,
-        Cartão_ID: row.cartao_id,
         Cartão: row.cartao,
-        Fatura_ID: row.fatura_id,
         Fatura: row.fatura,
         Status: row.status,
         Descrição: row.descricao,
       }));
       const worksheet = XLSX.utils.json_to_sheet(exportRows, {
-        header: ["ID", "Tipo", "Valor", "Data", "Categoria_ID", "Categoria", "Conta_ID", "Banco", "Cartão_ID", "Cartão", "Fatura_ID", "Fatura", "Status", "Descrição"],
+        header: ["Tipo", "Valor", "Data", "Categoria", "Banco", "Cartão", "Fatura", "Status", "Descrição"],
       });
       worksheet["!cols"] = [
-        { wch: 38 }, { wch: 12 }, { wch: 14 }, { wch: 14 }, { wch: 24 },
-        { wch: 24 }, { wch: 38 }, { wch: 24 }, { wch: 38 }, { wch: 24 },
-        { wch: 38 }, { wch: 24 }, { wch: 14 }, { wch: 48 },
+        { wch: 12 }, { wch: 14 }, { wch: 14 }, { wch: 24 }, { wch: 24 },
+        { wch: 24 }, { wch: 24 }, { wch: 14 }, { wch: 48 },
       ];
 
       const workbook = XLSX.utils.book_new();
